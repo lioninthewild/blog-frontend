@@ -1,7 +1,7 @@
 import api from "./api";
 
-export const getAllPosts = async (token) => {
-  const response = await api.get("/posts", {
+export const getAllPosts = async (token, page = 1, limit = 5) => {
+  const response = await api.get(`/posts?page=${page}&limit=${limit}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;

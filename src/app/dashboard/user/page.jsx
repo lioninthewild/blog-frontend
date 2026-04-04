@@ -4,13 +4,22 @@ import { useAuth } from "@/context/AuthContext";
 import { usePosts } from "@/hooks/usePosts";
 import PostCard from "@/components/PostCard";
 import PostForm from "@/components/PostForm";
+import Pagination from "@/components/Pagination";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useRouter } from "next/navigation";
 
 export default function UserDashboard() {
   const { user, logout } = useAuth();
-  const { posts, loading, error, handleCreate, handleUpdate, handleDelete } =
-    usePosts();
+  const {
+    posts,
+    pagination,
+    loading,
+    error,
+    handleCreate,
+    handleUpdate,
+    handleDelete,
+    goToPage,
+  } = usePosts();
   const [editingPost, setEditingPost] = useState(null);
   const router = useRouter();
 
@@ -71,6 +80,8 @@ export default function UserDashboard() {
             ))
           )}
         </div>
+
+        <Pagination pagination={pagination} onPageChange={goToPage} />
       </div>
     </ProtectedRoute>
   );
