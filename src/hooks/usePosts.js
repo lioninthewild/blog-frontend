@@ -76,5 +76,6 @@ export const usePosts = () => {
     handleUpdate,
     handleDelete,
     goToPage,
+    fetchPosts,
   };
 };

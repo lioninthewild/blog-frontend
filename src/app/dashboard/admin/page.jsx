@@ -1,14 +1,24 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import { usePosts } from "@/hooks/usePosts";
+import { useComments } from "@/hooks/useComments";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Pagination from "@/components/Pagination";
+import CommentSection from "@/components/CommentSection";
 import { useRouter } from "next/navigation";
 
 export default function AdminDashboard() {
   const { user, logout } = useAuth();
-  const { posts, pagination, loading, error, handleDelete, goToPage } =
-    usePosts();
+  const {
+    posts,
+    pagination,
+    loading,
+    error,
+    handleDelete,
+    goToPage,
+    fetchPosts,
+  } = usePosts();
+  const { handleAddComment, handleDeleteComment } = useComments(fetchPosts);
   const router = useRouter();
 
   const handleLogout = () => {
@@ -68,6 +78,14 @@ export default function AdminDashboard() {
                     Delete
                   </button>
                 </div>
+
+                <CommentSection
+                  post={post}
+                  currentUserId={user?.userId}
+                  currentUserRole={user?.role}
+                  onAddComment={handleAddComment}
+                  onDeleteComment={handleDeleteComment}
+                />
               </div>
             ))
           )}
