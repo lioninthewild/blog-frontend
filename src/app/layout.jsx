@@ -1,5 +1,5 @@
 import { AuthProvider } from "@/context/AuthContext";
-// import "./globals.css";
+import "./global.css";
 
 export const metadata = {
   title: "Blog App",
