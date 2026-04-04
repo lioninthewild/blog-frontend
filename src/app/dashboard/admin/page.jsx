@@ -1,12 +1,24 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import { usePosts } from "@/hooks/usePosts";
+import { useComments } from "@/hooks/useComments";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import Pagination from "@/components/Pagination";
+import CommentSection from "@/components/CommentSection";
 import { useRouter } from "next/navigation";
 
 export default function AdminDashboard() {
   const { user, logout } = useAuth();
-  const { posts, loading, error, handleDelete } = usePosts();
+  const {
+    posts,
+    pagination,
+    loading,
+    error,
+    handleDelete,
+    goToPage,
+    fetchPosts,
+  } = usePosts();
+  const { handleAddComment, handleDeleteComment } = useComments(fetchPosts);
   const router = useRouter();
 
   const handleLogout = () => {
@@ -35,7 +47,9 @@ export default function AdminDashboard() {
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <div className="space-y-4">
-          <h2 className="font-semibold text-lg">All Posts ({posts.length})</h2>
+          <h2 className="font-semibold text-lg">
+            All Posts ({pagination.total})
+          </h2>
 
           {posts.length === 0 ? (
             <p className="text-gray-500 text-sm">No posts found.</p>
@@ -64,10 +78,20 @@ export default function AdminDashboard() {
                     Delete
                   </button>
                 </div>
+
+                <CommentSection
+                  post={post}
+                  currentUserId={user?.userId}
+                  currentUserRole={user?.role}
+                  onAddComment={handleAddComment}
+                  onDeleteComment={handleDeleteComment}
+                />
               </div>
             ))
           )}
         </div>
+
+        <Pagination pagination={pagination} onPageChange={goToPage} />
       </div>
     </ProtectedRoute>
   );

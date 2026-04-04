@@ -1,6 +1,15 @@
 "use client";
+import CommentSection from "./CommentSection";
 
-export default function PostCard({ post, currentUserId, onDelete, onEdit }) {
+export default function PostCard({
+  post,
+  currentUserId,
+  currentUserRole,
+  onDelete,
+  onEdit,
+  onAddComment,
+  onDeleteComment,
+}) {
   const isOwner = post.author.id === currentUserId;
 
   return (
@@ -25,6 +34,14 @@ export default function PostCard({ post, currentUserId, onDelete, onEdit }) {
           </button>
         </div>
       )}
+
+      <CommentSection
+        post={post}
+        currentUserId={currentUserId}
+        currentUserRole={currentUserRole}
+        onAddComment={onAddComment}
+        onDeleteComment={onDeleteComment}
+      />
     </div>
   );
 }
