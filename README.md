@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Blog App - Frontend
 
-## Getting Started
+This is the frontend for the blog app.
+It is built with Next.js and styled with Tailwind CSS.
 
-First, run the development server:
+---
+
+## What it does
+
+- Lets users register and log in
+- Saves the token in localStorage after login
+- Shows a different dashboard based on the user role
+- Lets users create, edit and delete their own posts
+- Lets users add and delete their own comments
+- Protects pages so only the right role can access them
+
+---
+
+## How to Run
+
+Go into the frontend folder:
+
+```bash
+cd frontend
+```
+
+Install the packages:
+
+```bash
+npm install
+```
+
+Start the app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+It will run on http://localhost:3000
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Make sure the backend is running on http://localhost:5000 before using the app.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Folder Structure
 
-To learn more about Next.js, take a look at the following resources:
+frontend/
+src/
+app/ → all the pages
+components/ → reusable UI pieces
+context/ → global auth state
+hooks/ → reusable logic
+services/ → all API calls
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Pages
 
-## Deploy on Vercel
+- /login → login page
+- /register → register page
+- /dashboard/user → dashboard for normal users
+- /dashboard/admin → dashboard for admins
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Components
+
+- PostCard → shows a single post with edit and delete buttons
+- PostForm → form for creating and editing posts
+- CommentSection → shows comments and lets users add or delete them
+- Pagination → handles moving between pages of posts
+- ProtectedRoute → blocks pages from users who are not logged in or wrong role
+
+---
+
+## Hooks
+
+- useLogin → handles the login process
+- useRegister → handles the register process
+- usePosts → fetches posts and handles create, update, delete
+- useComments → handles adding and deleting comments
+
+---
+
+## How auth state is managed
+
+After login, the token and user info are saved in localStorage.
+The AuthContext reads this on page load and makes it available everywhere in the app.
+When the user logs out, everything is cleared from localStorage and state.
+
+---
+
+## How pages are protected
+
+Every dashboard page is wrapped in a ProtectedRoute component.
+If the user is not logged in, they get sent to the login page.
+If they are logged in but have the wrong role, they get sent to their correct dashboard.
+
+---
+
+## Tech Stack
+
+- Next.js
+- Tailwind CSS
+- Axios
+- Context API
