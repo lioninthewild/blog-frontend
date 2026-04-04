@@ -1,26 +1,15 @@
 "use client";
 import { useState } from "react";
-import { loginUser } from "@/services/auth.service";
+import { useLogin } from "@/hooks/useLogin";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { handleLogin, error, loading } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const data = await loginUser(email, password);
-      console.log("Login success:", data);
-    } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
+    await handleLogin(email, password);
   };
 
   return (
