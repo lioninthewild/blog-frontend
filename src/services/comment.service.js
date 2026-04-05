@@ -1,7 +1,7 @@
-import api from "./api";
+import API_CALL from "./axiosCall";
 
 export const addComment = async (token, postId, content) => {
-  const response = await api.post(
+  const response = await API_CALL.post(
     `/posts/${postId}/comments`,
     { content },
     { headers: { Authorization: `Bearer ${token}` } },
@@ -10,8 +10,11 @@ export const addComment = async (token, postId, content) => {
 };
 
 export const deleteComment = async (token, postId, commentId) => {
-  const response = await api.delete(`/posts/${postId}/comments/${commentId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await API_CALL.delete(
+    `/posts/${postId}/comments/${commentId}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
   return response.data;
 };

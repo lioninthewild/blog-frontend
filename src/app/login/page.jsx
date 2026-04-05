@@ -6,6 +6,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { handleLogin, error, loading } = useLogin();
+  <p className="text-blue-500 text-2xl font-bold">Tailwind works</p>;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
