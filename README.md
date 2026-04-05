@@ -3,7 +3,7 @@
 This is the frontend for the blog app.
 It is built with Next.js and styled with Tailwind CSS.
 
----
+🌐 **Live Demo:** [https://blog-aappp.netlify.app](https://blog-aappp.netlify.app)
 
 ## What it does
 
